@@ -11,6 +11,10 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      sans: ["Inter", "sans-serif"],
+      heading: ["Poppins", "sans-serif"],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -19,10 +23,6 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        heading: ["Poppins", "sans-serif"],
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
