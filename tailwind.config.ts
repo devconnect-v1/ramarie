@@ -11,6 +11,10 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      sans: ["Inter", "sans-serif"],
+      heading: ["Poppins", "sans-serif"],
+    },
     container: {
       center: true,
       padding: "2rem",
