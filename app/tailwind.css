@@ -57,31 +57,13 @@
     @apply bg-background text-foreground;
   }
 }
-/* public/css/styles.css */
 
-@font-face {
-  font-family: "Poppins";
-  src: url("../public/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
-  /* Ajoutez ici les différentes variantes de la police si nécessaire */
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("../public/fonts/Inter/Inter-VariableFont_slnt,wght.ttf")
-    format("truetype");
-  /* Ajoutez ici les différentes variantes de la police si nécessaire */
-}
-
-/* Utilisation des polices dans votre application */
-h1,
 h2,
 h3 {
   font-family: "Poppins", sans-serif;
-  /* Autres styles pour les titres */
 }
 
 p,
 button {
   font-family: "Inter", sans-serif;
-  /* Autres styles pour les paragraphes et les boutons */
 }

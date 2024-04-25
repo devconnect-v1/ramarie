@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-import-sort",
+    "prettier-plugin-sort-imports"
+  ],
+  "tailwindConfig": "./tailwind.config.ts",
+  "tailwindAttributes": "className",
+  "tailwindFunctions": ["cn"]
+}

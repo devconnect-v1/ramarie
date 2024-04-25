@@ -5,6 +5,14 @@ import { Label } from "@/components/ui/label";
 
 export type ListOfErrors = (string | null | undefined)[] | null | undefined;
 
+interface FieldProps {
+  labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
+  inputProps: React.InputHTMLAttributes<HTMLInputElement>;
+  errors?: ListOfErrors;
+  className?: string;
+  errorId?: string;
+}
+
 export function ErrorList({
   id,
   errors,
@@ -31,31 +39,27 @@ export function Field({
   errors,
   className,
   errorId,
-}: {
-  labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
-  inputProps: React.InputHTMLAttributes<HTMLInputElement>;
-  errors?: ListOfErrors;
-  className?: string;
-  errorId?: string;
-}) {
+}: FieldProps) {
   return (
-    <div className={className}>
-      <Label
-        className="block text-sm font-medium text-gray-700"
-        htmlFor={inputProps.id}
-        {...labelProps}
-      />
-      <div className="mt-1">
-        <Input
-          {...inputProps}
-          aria-describedby={errorId}
-          aria-invalid={errors ? true : undefined}
+    <div>
+      <div className={className}>
+        <Label
+          className="block text-base font-medium text-gray-700"
+          htmlFor={inputProps.id}
+          {...labelProps}
         />
-        {errors ? (
-          <div id={errorId} className="pt-1 text-red-700">
-            {errors}
-          </div>
-        ) : null}
+        <div className="mt-1">
+          <Input
+            {...inputProps}
+            aria-describedby={errorId}
+            aria-invalid={errors ? true : undefined}
+          />
+          {errors ? (
+            <div id={errorId} className="pt-1 text-red-700">
+              <ErrorList errors={errors} />
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );
