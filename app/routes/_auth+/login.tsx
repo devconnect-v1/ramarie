@@ -10,6 +10,7 @@ import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { z } from "zod";
 
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Field } from "~/components/forms";
 import { createUserSession, getUserId } from "~/utils/session.server";
@@ -17,7 +18,6 @@ import { verifyLogin } from "~/utils/user.server";
 
 import lineImg from "../../../public/assets/brand/LineImg.svg";
 import logoImg from "../../../public/assets/logo/LogoImg.svg";
-import { Button } from "@/components/ui/button";
 
 export const LoginSchema = z.object({
   email: z.string().email().trim().toLowerCase(),

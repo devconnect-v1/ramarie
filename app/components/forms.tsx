@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 
 export type ListOfErrors = (string | null | undefined)[] | null | undefined;
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type FieldProps = {
   labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
