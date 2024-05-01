@@ -8,7 +8,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLocation,
 } from "@remix-run/react";
 
 import stylesheet from "~/tailwind.css";
@@ -37,10 +36,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function App() {
-  const pathname = useLocation().pathname;
-
-  const shouldHideOverflow =
-    pathname === "/login" || pathname === "/join" || pathname === "/logout";
   return (
     <html lang="en" className="h-full">
       <head>
@@ -49,9 +44,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body
-        className={`h-full ${shouldHideOverflow ? "overflow-hidden" : ""} bg-background dark:bg-background`}
-      >
+      <body className={`h-full bg-background dark:bg-background`}>
         <Outlet />
         <ScrollRestoration />
         <Scripts />

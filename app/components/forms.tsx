@@ -5,13 +5,13 @@ import { Label } from "@/components/ui/label";
 
 export type ListOfErrors = (string | null | undefined)[] | null | undefined;
 
-interface FieldProps {
+type FieldProps = {
   labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
   errors?: ListOfErrors;
   className?: string;
   errorId?: string;
-}
+};
 
 export function ErrorList({
   id,

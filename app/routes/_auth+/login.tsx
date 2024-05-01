@@ -11,13 +11,13 @@ import { useEffect, useRef } from "react";
 import { z } from "zod";
 
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { Field } from "~/components/forms";
 import { createUserSession, getUserId } from "~/utils/session.server";
 import { verifyLogin } from "~/utils/user.server";
 
-import LineImg from "../../../public/assets/brand/LineImg.svg";
+import lineImg from "../../../public/assets/brand/LineImg.svg";
 import logoImg from "../../../public/assets/logo/LogoImg.svg";
+import { Button } from "@/components/ui/button";
 
 export const LoginSchema = z.object({
   email: z.string().email().trim().toLowerCase(),
@@ -85,17 +85,13 @@ export default function LoginPage() {
   }, [fields]);
 
   return (
-    <div className="bg-[#DFDACF] size-full flex justify-center items-center overflow-x-hidden overscroll-none ">
+    <div className="bg-[#DFDACF] size-full flex justify-center items-center overflow-hidden">
       <img
-        src={LineImg}
+        src={lineImg}
         alt="ligne"
         className="fixed left-0 right-full z-10 min-h-full hidden lg:block"
       />
-      <Card
-        className={cn(
-          "max-w-7xl container mx-auto bg-white p-5 flex shadow-md rounded-2xl h-screen lg:w-1/2 lg:h-auto ",
-        )}
-      >
+      <Card className="max-w-7xl container mx-auto bg-white p-5 flex shadow-md rounded-2xl h-screen lg:w-1/2 lg:h-auto ">
         {/* image */}
 
         <img
@@ -126,7 +122,7 @@ export default function LoginPage() {
                 ...getInputProps(fields.email, {
                   type: "email",
                 }),
-                placeholder: "user@gmail.com",
+                placeholder: "user@example.com",
               }}
               errors={fields.email.errors}
               errorId={fields.email.errorId}
@@ -159,12 +155,12 @@ export default function LoginPage() {
                 Se souvenir de moi
               </label>
             </div>
-            <button
+            <Button
               type="submit"
               className="w-full rounded bg-primary px-4 py-2 text-white hover:bg-primary/80 focus:bg-blue-400"
             >
               Connexion
-            </button>
+            </Button>
             <div className="flex items-center justify-center">
               <div className="text-center text-sm text-gray-500">
                 Vous n&apos;êtes pas encore sur Ramarie ?{" "}
