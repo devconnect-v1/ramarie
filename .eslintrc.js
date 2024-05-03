@@ -87,6 +87,8 @@ module.exports = {
             "newlines-between": "always",
           },
         ],
+        // We prefer type rather than interface for declaring ComponentProps Type
+        "@typescript-eslint/consistent-type-definitions": "off",
       },
     },
 
