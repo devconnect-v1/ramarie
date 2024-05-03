@@ -54,7 +54,11 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+  h1,
+  h2 h3 {
+    @apply font-heading;
   }
 }
 
@@ -66,4 +70,5 @@ h3 {
 p,
 button {
   font-family: "Inter", sans-serif;
+
 }
