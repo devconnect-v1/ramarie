@@ -1,5 +1,5 @@
-import { useForm, getInputProps } from "@conform-to/react";
-import { parseWithZod, getZodConstraint } from "@conform-to/zod";
+import { getInputProps, useForm } from "@conform-to/react";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
@@ -19,18 +19,37 @@ import { createUser, getUserByEmail } from "~/utils/user.server";
 import lineImg from "../../../public/assets/brand/LineImg.svg";
 import logoImg from "../../../public/assets/logo/LogoImg.svg";
 
-const RegisterSchema = z.object({
-  username: z.string().min(6),
-  date: z
-    .date()
-    .min(new Date(1900, 0, 1))
-    .max(new Date()),
-  gender: z.enum(["male", "female", "other"]),
-  email: z.string().email(),
-  password: z.string().min(8),
-  confirm: z.string(),
-  redirectTo: z.string().optional(),
-});
+const passwordValidation = new RegExp(
+  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+);
+
+const RegisterSchema = z
+  .object({
+    username: z
+      .string()
+      .min(1, { message: "Doit contenir au moins un caractère" }),
+    email: z
+      .string()
+      .min(1, { message: "Doit contenir au moins un caractère" })
+      .email({
+        message: "Doit être une adresse email valide",
+      }),
+    password: z
+      .string()
+      .min(8, { message: "Doit contenir au moins huit caractères" })
+      .regex(passwordValidation, {
+        message:
+          "Doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
+      }),
+    confirm: z.string(),
+    birthdate: z.date(),
+    gender: z.string(),
+    redirectTo: z.string().optional(),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "ne correspond pas",
+    path: ["confirmé"],
+  });
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserId(request);
@@ -46,16 +65,17 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return submission.reply();
   }
 
-  const { username, date, email, password, redirectTo } = submission.value;
+  const { username, email, redirectTo } = submission.value;
+
   const existingUser = await getUserByEmail(email);
 
   if (existingUser) {
     return submission.reply({
-      fieldErrors: { email: ["Email already in use"] },
+      fieldErrors: { email: ["Email déjà utilisé"] },
     });
   }
 
-  const user = await createUser(username, date, email, password);
+  const user = await createUser(username, email);
 
   return createUserSession({
     redirectTo: redirectTo || "/",
@@ -65,7 +85,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   });
 };
 
-export const meta: MetaFunction = () => [{ title: "Sign Up" }];
+export const meta: MetaFunction = () => [{ title: "Register" }];
 
 export default function Join() {
   const [searchParams] = useSearchParams();
@@ -81,19 +101,22 @@ export default function Join() {
     shouldRevalidate: "onBlur",
   });
   const usernameRef = useRef<HTMLInputElement>(null);
-  const dateRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const birthdateRef = useRef<HTMLInputElement>(null);
+  const genderRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (fields.username.errors) {
       usernameRef.current?.focus();
-    } else if (fields.date.errors) {
-      dateRef.current?.focus();
     } else if (fields.email.errors) {
       emailRef.current?.focus();
     } else if (fields.password.errors) {
       passwordRef.current?.focus();
+    } else if (fields.birthdate.errors) {
+      birthdateRef.current?.focus();
+    } else if (fields.gender.errors) {
+      genderRef.current?.focus();
     }
   }, [fields]);
 
@@ -105,8 +128,6 @@ export default function Join() {
         className="fixed left-0 right-full z-10 min-h-full hidden lg:block"
       />
       <Card className="max-w-7xl container mx-auto bg-white p-5 flex shadow-md rounded-2xl h-screen lg:w-1/2 lg:h-auto ">
-        {/* image */}
-
         <img
           src="https://images.unsplash.com/photo-1513435268174-838c8948bdfc?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt=""
@@ -126,74 +147,83 @@ export default function Join() {
             aria-invalid={form.errors ? true : undefined}
             aria-describedby={form.errors ? form.errorId : undefined}
           >
-            <div id={form.errorId} className="pt-1 text-red-700">
-              {form.errors}
+            {/* Left Column */}
+            <div className="flex flex-col justify-center items-center lg:flex-row lg:space-x-4">
+              <div className="flex-1 ">
+                <Field
+                  labelProps={{ children: "Nom d'utilisateur" }}
+                  inputProps={{
+                    ...getInputProps(fields.username, {
+                      type: "text",
+                    }),
+                    placeholder: "Koto Kely",
+                  }}
+                  errors={fields.username.errors}
+                  errorId={fields.username.errorId}
+                />
+
+                <Field
+                  labelProps={{ children: "Mot de passe" }}
+                  className="relative"
+                  inputProps={{
+                    ...getInputProps(fields.password, {
+                      type: "password",
+                    }),
+                    placeholder: "********",
+                  }}
+                  errors={fields.password.errors}
+                  errorId={fields.password.errorId}
+                />
+              </div>
+              {/* Right Column */}
+              <div className="flex-1">
+                <Field
+                  labelProps={{ children: "Email" }}
+                  inputProps={{
+                    ...getInputProps(fields.email, {
+                      type: "email",
+                    }),
+                    placeholder: "rakoto@mail.mg",
+                  }}
+                  errors={fields.email.errors}
+                  errorId={fields.email.errorId}
+                />
+                <Field
+                  labelProps={{ children: "Confirmer mot de passe" }}
+                  inputProps={{
+                    ...getInputProps(fields.confirm, {
+                      type: "password",
+                    }),
+                    placeholder: "********",
+                  }}
+                  errors={fields.confirm.errors}
+                  errorId={fields.confirm.errorId}
+                />
+              </div>
             </div>
-            <Field
-              labelProps={{ children: "Nom d'utilisateur" }}
-              inputProps={{
-                ...getInputProps(fields.username, {
-                  type: "text",
-                }),
-                placeholder: "Ramarie",
-              }}
-              errors={fields.username.errors}
-              errorId={fields.username.errorId}
-            />
-            <Field
-              labelProps={{ children: "Date de naissance" }}
-              inputProps={{
-                ...getInputProps(fields.date, {
-                  type: "date",
-                }),
-                placeholder: "Ramarie",
-              }}
-              errors={fields.date.errors}
-              errorId={fields.date.errorId}
-            />
-            <Field
-              labelProps={{ children: "Email" }}
-              inputProps={{
-                ...getInputProps(fields.email, {
-                  type: "email",
-                }),
-                placeholder: "Ramarie",
-              }}
-              errors={fields.email.errors}
-              errorId={fields.email.errorId}
-            />
-
-            <Field
-              labelProps={{ children: "Mot de passe" }}
-              inputProps={{
-                ...getInputProps(fields.password, {
-                  type: "password",
-                }),
-                placeholder: "********",
-              }}
-              errors={fields.password.errors}
-              errorId={fields.password.errorId}
-            />
-            <Field
-              labelProps={{ children: "Confirmation du mot de passe" }}
-              inputProps={{
-                ...getInputProps(fields.confirm, {
-                  type: "password",
-                }),
-                placeholder: "********",
-              }}
-              errors={fields.confirm.errors}
-              errorId={fields.confirm.errorId}
-            />
-
             <input type="hidden" name="redirectTo" value={redirectTo} />
-            <Button
-              type="submit"
-              className="w-full rounded bg-primary px-4 py-2 text-white hover:bg-primary/80 focus:bg-blue-400"
-            >
-              Enregister
-            </Button>
-            <div className="flex items-center justify-center">
+            <div className="w-full">
+              <Field
+                labelProps={{ children: "Date de naissance" }}
+                inputProps={{
+                  ...getInputProps(fields.birthdate, {
+                    type: "date",
+                  }),
+                }}
+                errors={fields.birthdate.errors}
+                errorId={fields.birthdate.errorId}
+              />
+            </div>
+            {/* Button */}
+            <div className="flex justify-center">
+              <Button
+                type="submit"
+                className="w-full rounded bg-primary px-4 py-2 text-white hover:bg-primary/80 focus:bg-blue-400"
+              >
+                S&apos;inscrire
+              </Button>
+            </div>
+            <div className="flex items-center justify-center mt-4">
               <div className="text-center text-sm text-gray-500">
                 Vous êtes déjà sur Ramarie ?{" "}
                 <Link
@@ -203,7 +233,7 @@ export default function Join() {
                     search: searchParams.toString(),
                   }}
                 >
-                  Connectez vous ici
+                  Connectez-vous ici
                 </Link>
               </div>
             </div>
