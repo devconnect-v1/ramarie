@@ -43,7 +43,7 @@ const RegisterSchema = z
       }),
     confirm: z.string(),
     birthdate: z.date(),
-    gender: z.string(),
+    // gender: z.string(),
     redirectTo: z.string().optional(),
   })
   .refine((data) => data.password === data.confirm, {
@@ -104,7 +104,7 @@ export default function Join() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const birthdateRef = useRef<HTMLInputElement>(null);
-  const genderRef = useRef<HTMLInputElement>(null);
+  // const genderRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (fields.username.errors) {
@@ -115,9 +115,10 @@ export default function Join() {
       passwordRef.current?.focus();
     } else if (fields.birthdate.errors) {
       birthdateRef.current?.focus();
-    } else if (fields.gender.errors) {
-      genderRef.current?.focus();
     }
+    // else if (fields.gender.errors) {
+    //   genderRef.current?.focus();
+    // }
   }, [fields]);
 
   return (
@@ -157,6 +158,7 @@ export default function Join() {
                       type: "text",
                     }),
                     placeholder: "Koto Kely",
+                    "data-cy": "username-input",
                   }}
                   errors={fields.username.errors}
                   errorId={fields.username.errorId}
@@ -170,6 +172,7 @@ export default function Join() {
                       type: "password",
                     }),
                     placeholder: "********",
+                    "data-cy": "password-input",
                   }}
                   errors={fields.password.errors}
                   errorId={fields.password.errorId}
@@ -184,6 +187,7 @@ export default function Join() {
                       type: "email",
                     }),
                     placeholder: "rakoto@mail.mg",
+                    "data-cy": "email-input",
                   }}
                   errors={fields.email.errors}
                   errorId={fields.email.errorId}
@@ -195,6 +199,7 @@ export default function Join() {
                       type: "password",
                     }),
                     placeholder: "********",
+                    "data-cy": "password-confirm-input",
                   }}
                   errors={fields.confirm.errors}
                   errorId={fields.confirm.errorId}
@@ -209,6 +214,7 @@ export default function Join() {
                   ...getInputProps(fields.birthdate, {
                     type: "date",
                   }),
+                  "data-cy": "birthdate-input",
                 }}
                 errors={fields.birthdate.errors}
                 errorId={fields.birthdate.errorId}
