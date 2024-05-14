@@ -14,6 +14,7 @@ const config = {
     fontFamily: {
       sans: ["Inter", "sans-serif"],
       heading: ["Poppins", "sans-serif"],
+      lobster: ["Lobster", "sans-serif"],
     },
     container: {
       center: true,

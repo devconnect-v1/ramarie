@@ -51,13 +51,9 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border font-heading;
   }
   body {
-    @apply bg-background text-foreground font-sans;
-  }
-  h1,
-  h2 h3 {
-    @apply font-heading;
+    @apply bg-background text-foreground;
   }
 }
