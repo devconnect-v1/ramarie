@@ -148,72 +148,55 @@ export default function Join() {
             aria-describedby={form.errors ? form.errorId : undefined}
           >
             {/* Left Column */}
-            <div className="flex flex-col justify-center items-center lg:flex-row lg:space-x-4">
-              <div className="flex-1 ">
-                <Field
-                  labelProps={{ children: "Nom d'utilisateur" }}
-                  inputProps={{
-                    ...getInputProps(fields.username, {
-                      type: "text",
-                    }),
-                    placeholder: "Koto Kely",
-                  }}
-                  errors={fields.username.errors}
-                  errorId={fields.username.errorId}
-                />
-
-                <Field
-                  labelProps={{ children: "Mot de passe" }}
-                  className="relative"
-                  inputProps={{
-                    ...getInputProps(fields.password, {
-                      type: "password",
-                    }),
-                    placeholder: "********",
-                  }}
-                  errors={fields.password.errors}
-                  errorId={fields.password.errorId}
-                />
-              </div>
-              {/* Right Column */}
-              <div className="flex-1">
-                <Field
-                  labelProps={{ children: "Email" }}
-                  inputProps={{
-                    ...getInputProps(fields.email, {
-                      type: "email",
-                    }),
-                    placeholder: "rakoto@mail.mg",
-                  }}
-                  errors={fields.email.errors}
-                  errorId={fields.email.errorId}
-                />
-                <Field
-                  labelProps={{ children: "Confirmer mot de passe" }}
-                  inputProps={{
-                    ...getInputProps(fields.confirm, {
-                      type: "password",
-                    }),
-                    placeholder: "********",
-                  }}
-                  errors={fields.confirm.errors}
-                  errorId={fields.confirm.errorId}
-                />
-              </div>
-            </div>
-            <input type="hidden" name="redirectTo" value={redirectTo} />
-            <div className="w-full">
+            <div className="flex flex-col ">
               <Field
-                labelProps={{ children: "Date de naissance" }}
+                labelProps={{ children: "Nom d'utilisateur" }}
                 inputProps={{
-                  ...getInputProps(fields.birthdate, {
-                    type: "date",
+                  ...getInputProps(fields.username, {
+                    type: "text",
                   }),
+                  placeholder: "Koto Kely",
                 }}
-                errors={fields.birthdate.errors}
-                errorId={fields.birthdate.errorId}
+                errors={fields.username.errors}
+                errorId={fields.username.errorId}
+              />
+              <Field
+                labelProps={{ children: "Email" }}
+                inputProps={{
+                  ...getInputProps(fields.email, {
+                    type: "email",
+                  }),
+                  placeholder: "rakoto@mail.mg",
+                }}
+                errors={fields.email.errors}
+                errorId={fields.email.errorId}
+              />
+              <Field
+                labelProps={{ children: "Mot de passe" }}
+                className="relative"
+                inputProps={{
+                  ...getInputProps(fields.password, {
+                    type: "password",
+                  }),
+                  placeholder: "********",
+                }}
+                errors={fields.password.errors}
+                errorId={fields.password.errorId}
+              />
+
+              <Field
+                labelProps={{ children: "Confirmer mot de passe" }}
+                inputProps={{
+                  ...getInputProps(fields.confirm, {
+                    type: "password",
+                  }),
+                  placeholder: "********",
+                }}
+                errors={fields.confirm.errors}
+                errorId={fields.confirm.errorId}
               />
             </div>
+            <input type="hidden" name="redirectTo" value={redirectTo} />
             {/* Button */}
             <div className="flex justify-center">
               <Button
