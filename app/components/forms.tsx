@@ -8,7 +8,9 @@ export type ListOfErrors = (string | null | undefined)[] | null | undefined;
 
 interface FieldProps {
   labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
-  inputProps: React.InputHTMLAttributes<HTMLInputElement>;
+  inputProps: React.InputHTMLAttributes<HTMLInputElement> & {
+    "data-cy"?: string;
+  };
   errors?: ListOfErrors;
   className?: string;
   errorId?: string;

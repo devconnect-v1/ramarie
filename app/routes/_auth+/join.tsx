@@ -42,8 +42,6 @@ const RegisterSchema = z
           "Doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
       }),
     confirm: z.string(),
-    birthdate: z.date(),
-    gender: z.string(),
     redirectTo: z.string().optional(),
   })
   .refine((data) => data.password === data.confirm, {
@@ -103,8 +101,6 @@ export default function Join() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const birthdateRef = useRef<HTMLInputElement>(null);
-  const genderRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (fields.username.errors) {
@@ -113,10 +109,6 @@ export default function Join() {
       emailRef.current?.focus();
     } else if (fields.password.errors) {
       passwordRef.current?.focus();
-    } else if (fields.birthdate.errors) {
-      birthdateRef.current?.focus();
-    } else if (fields.gender.errors) {
-      genderRef.current?.focus();
     }
   }, [fields]);
 
@@ -147,7 +139,6 @@ export default function Join() {
             aria-invalid={form.errors ? true : undefined}
             aria-describedby={form.errors ? form.errorId : undefined}
           >
-            {/* Left Column */}
             <div className="flex flex-col ">
               <Field
                 labelProps={{ children: "Nom d'utilisateur" }}
@@ -183,7 +174,6 @@ export default function Join() {
                 errors={fields.password.errors}
                 errorId={fields.password.errorId}
               />
-
               <Field
                 labelProps={{ children: "Confirmer mot de passe" }}
                 inputProps={{
