@@ -34,11 +34,7 @@ const HeroCarousel = () => {
         {carouselImages.map((image) => (
           <CarouselItem className="p-0" key={image.id}>
             <div className="relative w-full h-[100vh] overflow-hidden">
-              <img
-                className="h-full w-full object-cover"
-                src={`${image.url}`}
-                alt={`Slide ${image.id}`}
-              />
+              <img className="h-full w-full object-cover" src={`${image.url}`} alt={`Slide ${image.id}`} />
               <div className="absolute inset-0 bg-black opacity-40" />
             </div>
           </CarouselItem>
