@@ -24,6 +24,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        'about-bg': "url('https://devconnect-v1.github.io/ramarie-assets/about_bg.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
