@@ -24,7 +24,7 @@ export const About = () => {
   const user = useOptionalUser();
   return (
     <section className="py-20 bg-about-bg bg-cover">
-      <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 items-center w-full">
         <div className="flex flex-col gap-10">
           <TitleSection subtitle={subtitle} title={title} />
           <div className="flex flex-col gap-8">
