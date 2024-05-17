@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/carousel";
 
 const carouselImagesUrls: string[] = [
-  "https://devconnect-v1.github.io/ramarie-assets/carousel_1.webp",
-  "https://devconnect-v1.github.io/ramarie-assets/carousel_2.webp",
-  "https://devconnect-v1.github.io/ramarie-assets/carousel_3.webp",
-  "https://devconnect-v1.github.io/ramarie-assets/carousel_4.webp",
+  "https://devconnect-v1.github.io/ramarie-assets/hero_carousel_1.webp",
+  "https://devconnect-v1.github.io/ramarie-assets/hero_carousel_2.webp",
+  "https://devconnect-v1.github.io/ramarie-assets/hero_carousel_3.webp",
+  "https://devconnect-v1.github.io/ramarie-assets/hero_carousel_4.webp",
 ];
 
 const carouselImages = carouselImagesUrls.map((url: string, index: number) => ({
