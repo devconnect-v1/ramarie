@@ -39,8 +39,8 @@ export const Contact = () => {
           <TitleSection
             subtitle={subtitle}
             title={title}
-            whiteTitle
-            whiteSubtitle
+            titleVariant="light"
+            subtitleVariant="light"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center p-8 rounded-3xl bg-card">
             <div className="flex flex-col gap-6">
